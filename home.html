@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JRPCrew Labs — Creative Engineering & Spatial 3D Studio</title>
-  <meta name="description" content="Official home of JRPCrew Labs. Creators of Brickmine3D, spatial AI datasets, and next-generation in-browser 3D WebGL tools.">
-  <meta name="theme-color" content="#0B0F17">
+  <title>JRPCrew Labs — Independent Technology Studio & Venture Lab</title>
+  <meta name="description" content="JRPCrew Labs is an independent technology studio and venture lab exploring 3D graphics, applied AI, interactive tools, and emerging ventures. Creators of Brickmine3D.">
   
+  <!-- Canonical & Social Meta -->
+  <link rel="canonical" href="https://jrpcrewlabs.com/home">
+  <meta property="og:title" content="JRPCrew Labs — Technology Studio & Venture Lab">
+  <meta property="og:description" content="Inventing and scaling digital products across spatial 3D, intelligent automation, and experimental technology ventures.">
+  <meta property="og:image" content="https://jrpcrewlabs.com/assets/og_preview.png">
+  <meta property="og:url" content="https://jrpcrewlabs.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@JRPCrewLabs">
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/jrp_crew_logo.png">
   
@@ -16,28 +24,73 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      /* Brand Color System: Emerald Green, Radiant Sunset Orange, Crisp White */
-      --brand-green: #00E676;
-      --brand-green-hover: #00C853;
-      --brand-green-glow: rgba(0, 230, 118, 0.22);
+    /* ==========================================================================
+       THEME SYSTEM: LIGHT (Default) & DARK (Switchable)
+       Brand Colors: Electric Green, Energetic Orange, Pure White / Deep Obsidian
+       ========================================================================== */
+    :root, [data-theme="light"] {
+      --bg-primary: #FFFFFF;
+      --bg-surface: #F8FAFC;
+      --bg-card: #FFFFFF;
+      --bg-card-hover: #F1F5F9;
+      --text-main: #0A0D14;
+      --text-muted: #334155;
+      --text-dim: #64748B;
       
-      --brand-orange: #FF6D00;
-      --brand-orange-hover: #F55100;
-      --brand-orange-glow: rgba(255, 109, 0, 0.22);
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-card: rgba(15, 23, 42, 0.06);
 
-      --brand-white: #FFFFFF;
-      --brand-white-muted: #E2E8F0;
+      --brand-green: #00A854;
+      --brand-green-hover: #008f47;
+      --brand-green-bg: rgba(0, 168, 84, 0.08);
+      --brand-green-border: rgba(0, 168, 84, 0.3);
+      --brand-green-glow: rgba(0, 168, 84, 0.15);
+
+      --brand-orange: #EA580C;
+      --brand-orange-hover: #C2410C;
+      --brand-orange-bg: rgba(234, 88, 12, 0.08);
+      --brand-orange-border: rgba(234, 88, 12, 0.3);
+      --brand-orange-glow: rgba(234, 88, 12, 0.15);
+
+      --card-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08);
+      --card-shadow-hover: 0 20px 40px -15px rgba(15, 23, 42, 0.16);
+      --grid-color: rgba(15, 23, 42, 0.04);
+      --ambient-gradient-1: rgba(0, 168, 84, 0.06);
+      --ambient-gradient-2: rgba(234, 88, 12, 0.06);
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #080B10;
+      --bg-surface: #0F141F;
+      --bg-card: rgba(16, 22, 34, 0.85);
+      --bg-card-hover: rgba(24, 32, 48, 0.95);
+      --text-main: #FFFFFF;
+      --text-muted: #E2E8F0;
       --text-dim: #94A3B8;
 
-      --bg-dark: #080B10;
-      --bg-card: rgba(16, 22, 34, 0.75);
-      --bg-card-hover: rgba(24, 32, 48, 0.9);
-      
       --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-green: rgba(0, 230, 118, 0.35);
-      --border-orange: rgba(255, 109, 0, 0.35);
+      --border-card: rgba(255, 255, 255, 0.07);
 
+      --brand-green: #00E676;
+      --brand-green-hover: #00C853;
+      --brand-green-bg: rgba(0, 230, 118, 0.12);
+      --brand-green-border: rgba(0, 230, 118, 0.35);
+      --brand-green-glow: rgba(0, 230, 118, 0.22);
+
+      --brand-orange: #FF6D00;
+      --brand-orange-hover: #F55100;
+      --brand-orange-bg: rgba(255, 109, 0, 0.12);
+      --brand-orange-border: rgba(255, 109, 0, 0.35);
+      --brand-orange-glow: rgba(255, 109, 0, 0.22);
+
+      --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      --card-shadow-hover: 0 25px 50px rgba(0, 0, 0, 0.6);
+      --grid-color: rgba(255, 255, 255, 0.02);
+      --ambient-gradient-1: rgba(0, 230, 118, 0.1);
+      --ambient-gradient-2: rgba(255, 109, 0, 0.1);
+    }
+
+    :root {
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
@@ -46,6 +99,7 @@
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-display: 'Space Grotesk', var(--font-sans);
       --font-mono: 'JetBrains Mono', monospace;
+      --transition-theme: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     * {
@@ -55,16 +109,17 @@
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--brand-white);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
       font-family: var(--font-sans);
       min-height: 100vh;
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
+      transition: var(--transition-theme);
     }
 
-    /* Ambient dynamic backdrop glow */
+    /* Ambient backdrop glow */
     .ambient-canvas {
       position: fixed;
       top: 0;
@@ -74,9 +129,10 @@
       pointer-events: none;
       z-index: 0;
       background: 
-        radial-gradient(circle at 15% 20%, rgba(0, 230, 118, 0.12) 0%, transparent 45%),
-        radial-gradient(circle at 85% 30%, rgba(255, 109, 0, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 50% 85%, rgba(0, 230, 118, 0.08) 0%, transparent 45%);
+        radial-gradient(circle at 12% 18%, var(--ambient-gradient-1) 0%, transparent 45%),
+        radial-gradient(circle at 88% 28%, var(--ambient-gradient-2) 0%, transparent 50%),
+        radial-gradient(circle at 50% 88%, var(--ambient-gradient-1) 0%, transparent 45%);
+      transition: var(--transition-theme);
     }
 
     /* Subtle grid pattern */
@@ -87,8 +143,8 @@
       width: 100%;
       height: 100%;
       background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
       z-index: 1;
@@ -110,6 +166,7 @@
       padding: 1.75rem 0;
       border-bottom: 1px solid var(--border-subtle);
       margin-bottom: 3.5rem;
+      transition: var(--transition-theme);
     }
 
     .brand-logo-lockup {
@@ -124,8 +181,8 @@
       height: 46px;
       border-radius: 12px;
       object-fit: cover;
-      box-shadow: 0 0 20px var(--brand-green-glow);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 14px var(--brand-green-glow);
+      border: 1px solid var(--border-subtle);
       transition: transform 0.25s ease;
     }
 
@@ -135,10 +192,10 @@
 
     .brand-title {
       font-family: var(--font-display);
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       font-weight: 700;
       letter-spacing: -0.02em;
-      color: var(--brand-white);
+      color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -150,27 +207,48 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       background: linear-gradient(135deg, var(--brand-green), var(--brand-orange));
-      color: #000;
+      color: #FFFFFF;
       padding: 2px 8px;
       border-radius: var(--radius-full);
       font-family: var(--font-mono);
     }
 
-    .nav-socials {
+    .nav-actions {
       display: flex;
       align-items: center;
       gap: 0.75rem;
+    }
+
+    /* Theme Switcher Button */
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--brand-orange);
+      transform: rotate(15deg);
     }
 
     .nav-pill-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       padding: 0.55rem 1.1rem;
       border-radius: var(--radius-full);
-      color: var(--brand-white);
+      color: var(--text-main);
       text-decoration: none;
       font-size: 0.85rem;
       font-weight: 600;
@@ -178,16 +256,16 @@
     }
 
     .nav-pill-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--bg-card-hover);
       border-color: var(--brand-green);
-      box-shadow: 0 0 15px var(--brand-green-glow);
       color: var(--brand-green);
+      box-shadow: 0 0 15px var(--brand-green-glow);
     }
 
     /* Hero Section */
     .hero {
       text-align: center;
-      max-width: 860px;
+      max-width: 900px;
       margin: 0 auto 5rem;
       padding: 2rem 0 1rem;
     }
@@ -196,15 +274,16 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.4rem 1rem;
-      background: rgba(0, 230, 118, 0.08);
-      border: 1px solid var(--border-green);
+      padding: 0.4rem 1.1rem;
+      background: var(--brand-green-bg);
+      border: 1px solid var(--brand-green-border);
       border-radius: var(--radius-full);
       font-family: var(--font-mono);
       font-size: 0.82rem;
       color: var(--brand-green);
       margin-bottom: 1.5rem;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.03em;
+      font-weight: 600;
     }
 
     .pulse-dot {
@@ -217,38 +296,54 @@
     }
 
     @keyframes pulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
-      70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(0, 230, 118, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 200, 83, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(0, 200, 83, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 200, 83, 0); }
     }
 
     .hero h1 {
       font-family: var(--font-display);
-      font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+      font-size: clamp(2.4rem, 5.2vw, 4.1rem);
       font-weight: 800;
-      line-height: 1.1;
+      line-height: 1.15;
       letter-spacing: -0.03em;
       margin-bottom: 1.5rem;
+      color: var(--text-main);
     }
 
-    .hero h1 .text-gradient-green {
-      background: linear-gradient(135deg, #FFFFFF 30%, var(--brand-green) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .hero h1 .text-accent-green {
+      color: var(--brand-green);
     }
 
-    .hero h1 .text-gradient-orange {
-      background: linear-gradient(135deg, var(--brand-orange) 0%, #FFAB40 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .hero h1 .text-accent-orange {
+      color: var(--brand-orange);
     }
 
     .hero p {
-      font-size: 1.2rem;
-      color: var(--text-dim);
+      font-size: 1.22rem;
+      color: var(--text-muted);
       line-height: 1.7;
-      max-width: 680px;
-      margin: 0 auto 2.5rem;
+      max-width: 720px;
+      margin: 0 auto 2.25rem;
+    }
+
+    .sector-pills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2.75rem;
+    }
+
+    .sector-pill {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
     }
 
     .hero-actions {
@@ -264,29 +359,29 @@
       align-items: center;
       gap: 0.6rem;
       background: var(--brand-green);
-      color: #051408;
+      color: #FFFFFF;
       font-weight: 700;
       font-size: 1rem;
       padding: 0.85rem 1.8rem;
       border-radius: var(--radius-full);
       text-decoration: none;
-      box-shadow: 0 0 25px var(--brand-green-glow);
+      box-shadow: 0 4px 20px var(--brand-green-glow);
       transition: all 0.25s ease;
     }
 
     .btn-primary:hover {
       background: var(--brand-green-hover);
       transform: translateY(-2px);
-      box-shadow: 0 0 35px rgba(0, 230, 118, 0.45);
+      box-shadow: 0 8px 25px var(--brand-green-glow);
     }
 
     .btn-secondary {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      background: rgba(255, 109, 0, 0.1);
+      background: var(--brand-orange-bg);
       color: var(--brand-orange);
-      border: 1px solid var(--border-orange);
+      border: 1px solid var(--brand-orange-border);
       font-weight: 700;
       font-size: 1rem;
       padding: 0.85rem 1.8rem;
@@ -298,7 +393,7 @@
     .btn-secondary:hover {
       background: var(--brand-orange);
       color: #FFFFFF;
-      box-shadow: 0 0 30px var(--brand-orange-glow);
+      box-shadow: 0 6px 20px var(--brand-orange-glow);
       transform: translateY(-2px);
     }
 
@@ -317,6 +412,7 @@
       font-size: 1.85rem;
       font-weight: 700;
       letter-spacing: -0.02em;
+      color: var(--text-main);
     }
 
     .section-subtitle {
@@ -325,7 +421,7 @@
       margin-top: 0.25rem;
     }
 
-    /* Products & Creations Grid */
+    /* Products & Ventures Grid */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -335,10 +431,10 @@
 
     .product-card {
       background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-card);
       border-radius: var(--radius-lg);
-      padding: 2rem;
-      backdrop-filter: blur(16px);
+      padding: 2.2rem;
+      box-shadow: var(--card-shadow);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -353,7 +449,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 3px;
+      height: 4px;
       background: transparent;
       transition: background 0.3s ease;
     }
@@ -362,24 +458,22 @@
       background: linear-gradient(90deg, var(--brand-green), var(--brand-orange));
     }
 
-    .product-card.research::before {
+    .product-card.ai-lab::before {
       background: var(--brand-orange);
     }
 
-    .product-card.experimental::before {
-      background: var(--border-subtle);
+    .product-card.ventures::before {
+      background: var(--brand-green);
     }
 
     .product-card:hover {
       background: var(--bg-card-hover);
       transform: translateY(-4px);
-      border-color: rgba(255, 255, 255, 0.18);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--card-shadow-hover);
     }
 
     .product-card.flagship:hover {
-      border-color: var(--border-green);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px var(--brand-green-glow);
+      border-color: var(--brand-green-border);
     }
 
     .card-top {
@@ -406,21 +500,21 @@
       gap: 0.4rem;
     }
 
-    .status-badge.live {
-      background: rgba(0, 230, 118, 0.12);
+    .status-badge.flagship {
+      background: var(--brand-green-bg);
       color: var(--brand-green);
-      border: 1px solid var(--border-green);
+      border: 1px solid var(--brand-green-border);
     }
 
-    .status-badge.active-research {
-      background: rgba(255, 109, 0, 0.12);
+    .status-badge.research {
+      background: var(--brand-orange-bg);
       color: var(--brand-orange);
-      border: 1px solid var(--border-orange);
+      border: 1px solid var(--brand-orange-border);
     }
 
-    .status-badge.incubator {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--brand-white-muted);
+    .status-badge.incubation {
+      background: var(--bg-surface);
+      color: var(--text-muted);
       border: 1px solid var(--border-subtle);
     }
 
@@ -434,14 +528,14 @@
       font-family: var(--font-display);
       font-size: 1.6rem;
       font-weight: 700;
-      color: var(--brand-white);
+      color: var(--text-main);
       margin-bottom: 0.75rem;
       letter-spacing: -0.01em;
     }
 
     .card-description {
-      color: var(--text-dim);
-      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-size: 0.96rem;
       line-height: 1.65;
       margin-bottom: 1.5rem;
     }
@@ -456,9 +550,9 @@
     .tech-tag {
       font-family: var(--font-mono);
       font-size: 0.75rem;
-      color: var(--brand-white-muted);
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-dim);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
       padding: 0.25rem 0.65rem;
       border-radius: var(--radius-sm);
     }
@@ -468,11 +562,11 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
       padding: 0.85rem 1.2rem;
-      color: var(--brand-white);
+      color: var(--text-main);
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
@@ -480,36 +574,37 @@
     }
 
     .card-action-btn:hover {
-      background: var(--brand-white);
-      color: #000;
-      border-color: var(--brand-white);
+      background: var(--text-main);
+      color: var(--bg-primary);
+      border-color: var(--text-main);
       transform: translateY(-2px);
     }
 
     .card-action-btn.primary {
       background: var(--brand-green);
-      color: #000;
+      color: #FFFFFF;
       border-color: var(--brand-green);
       font-weight: 700;
     }
 
     .card-action-btn.primary:hover {
-      background: #00ff83;
-      box-shadow: 0 0 20px var(--brand-green-glow);
+      background: var(--brand-green-hover);
+      box-shadow: 0 4px 15px var(--brand-green-glow);
     }
 
-    /* Media & Snippets Showcase Section */
+    /* Media Showcase Section */
     .media-section {
       margin-bottom: 5rem;
     }
 
     .media-card {
       background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-card);
       border-radius: var(--radius-lg);
       padding: 2.5rem;
+      box-shadow: var(--card-shadow);
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
+      grid-template-columns: 1.15fr 1fr;
       gap: 2.5rem;
       align-items: center;
     }
@@ -526,7 +621,7 @@
       overflow: hidden;
       border: 1px solid var(--border-subtle);
       background: #000;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      box-shadow: var(--card-shadow);
       aspect-ratio: 16 / 9;
       display: flex;
       align-items: center;
@@ -537,26 +632,26 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.85;
+      opacity: 0.9;
       transition: transform 0.4s ease, opacity 0.4s ease;
     }
 
     .media-preview-container:hover img {
       transform: scale(1.03);
-      opacity: 0.95;
+      opacity: 1;
     }
 
     .play-badge-overlay {
       position: absolute;
-      width: 60px;
-      height: 60px;
+      width: 62px;
+      height: 62px;
       background: var(--brand-orange);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #FFF;
-      box-shadow: 0 0 30px var(--brand-orange-glow);
+      color: #FFFFFF;
+      box-shadow: 0 4px 20px var(--brand-orange-glow);
       pointer-events: none;
       transition: transform 0.25s ease;
     }
@@ -570,16 +665,17 @@
       font-size: 1.7rem;
       margin-bottom: 1rem;
       line-height: 1.3;
+      color: var(--text-main);
     }
 
     .media-content p {
-      color: var(--text-dim);
+      color: var(--text-muted);
       font-size: 1rem;
       margin-bottom: 1.75rem;
       line-height: 1.6;
     }
 
-    /* Socials & Channels Matrix */
+    /* Socials & Channels Grid */
     .socials-section {
       margin-bottom: 5rem;
     }
@@ -595,11 +691,12 @@
       align-items: center;
       gap: 1.25rem;
       background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-card);
       border-radius: var(--radius-md);
-      padding: 1.1rem 1.35rem;
+      padding: 1.15rem 1.35rem;
       text-decoration: none;
-      color: var(--brand-white);
+      color: var(--text-main);
+      box-shadow: var(--card-shadow);
       transition: all 0.25s ease;
       position: relative;
     }
@@ -607,8 +704,8 @@
     .social-pill-card:hover {
       background: var(--bg-card-hover);
       transform: translateY(-3px);
-      border-color: var(--border-green);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      border-color: var(--brand-green-border);
+      box-shadow: var(--card-shadow-hover);
     }
 
     .social-icon-box {
@@ -626,13 +723,14 @@
       transform: scale(1.1);
     }
 
-    .icon-yt { background: rgba(255, 0, 0, 0.15); color: #FF3333; }
-    .icon-tt { background: rgba(0, 242, 254, 0.15); color: #00F2FE; }
-    .icon-ig { background: rgba(225, 48, 108, 0.15); color: #E1306C; }
-    .icon-fb { background: rgba(24, 119, 242, 0.15); color: #1877F2; }
-    .icon-rd { background: rgba(255, 69, 0, 0.15); color: #FF4500; }
-    .icon-tw { background: rgba(255, 255, 255, 0.1); color: #FFFFFF; }
-    .icon-li { background: rgba(10, 102, 194, 0.15); color: #0A66C2; }
+    .icon-yt { background: rgba(255, 0, 0, 0.1); color: #E50914; }
+    .icon-tt { background: rgba(0, 0, 0, 0.08); color: #000000; }
+    [data-theme="dark"] .icon-tt { background: rgba(255, 255, 255, 0.1); color: #00F2FE; }
+    .icon-ig { background: rgba(225, 48, 108, 0.1); color: #E1306C; }
+    .icon-fb { background: rgba(24, 119, 242, 0.1); color: #1877F2; }
+    .icon-rd { background: rgba(255, 69, 0, 0.1); color: #FF4500; }
+    .icon-tw { background: rgba(15, 23, 42, 0.08); color: var(--text-main); }
+    .icon-li { background: rgba(10, 102, 194, 0.1); color: #0A66C2; }
 
     .social-details {
       flex: 1;
@@ -642,7 +740,7 @@
     .social-name {
       font-weight: 700;
       font-size: 0.95rem;
-      color: var(--brand-white);
+      color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -653,9 +751,9 @@
       font-size: 0.65rem;
       padding: 1px 6px;
       border-radius: var(--radius-full);
-      background: rgba(255, 109, 0, 0.15);
+      background: var(--brand-orange-bg);
       color: var(--brand-orange);
-      border: 1px solid var(--border-orange);
+      border: 1px solid var(--brand-orange-border);
     }
 
     .social-handle {
@@ -689,6 +787,7 @@
       gap: 1.5rem;
       color: var(--text-dim);
       font-size: 0.9rem;
+      transition: var(--transition-theme);
     }
 
     .footer-left {
@@ -710,13 +809,14 @@
     }
 
     .footer-link:hover {
-      color: var(--brand-white);
+      color: var(--text-main);
     }
 
     .contact-email {
       font-family: var(--font-mono);
       color: var(--brand-green);
       text-decoration: none;
+      font-weight: 600;
     }
     .contact-email:hover {
       text-decoration: underline;
@@ -729,12 +829,12 @@
         gap: 1.2rem;
         align-items: flex-start;
       }
-      .nav-socials {
+      .nav-actions {
         width: 100%;
-        justify-content: flex-start;
+        justify-content: space-between;
       }
       .hero h1 {
-        font-size: 2.4rem;
+        font-size: 2.3rem;
       }
       footer {
         flex-direction: column;
@@ -758,9 +858,14 @@
         </div>
       </a>
 
-      <div class="nav-socials">
+      <div class="nav-actions">
+        <!-- Day/Night Switcher Button -->
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Day / Night Mode" aria-label="Toggle Theme">
+          <span id="themeIcon">☀️</span>
+        </button>
+
         <a href="https://brickmine3d.jrpcrewlabs.com/studio" class="nav-pill-btn">
-          <span>Launch Studio 3D</span>
+          <span>Launch Brickmine3D</span>
           <span style="color: var(--brand-green);">⚡</span>
         </a>
         <a href="mailto:support@jrpcrewlabs.com" class="nav-pill-btn">
@@ -774,21 +879,29 @@
     <section class="hero">
       <div class="hero-badge">
         <span class="pulse-dot"></span>
-        <span>CREATIVE ENGINEERING &amp; SPATIAL 3D LAB</span>
+        <span>INDEPENDENT TECHNOLOGY STUDIO &amp; VENTURE LAB</span>
       </div>
 
       <h1>
-        Building the Future of <br>
-        <span class="text-gradient-green">In-Browser 3D</span> &amp; <span class="text-gradient-orange">Spatial Brick AI</span>
+        Engineering Intelligent <span class="text-accent-green">Digital Tools</span>, <br>
+        Spatial 3D &amp; <span class="text-accent-orange">Emerging Ventures</span>
       </h1>
 
       <p>
-        JRPCrew Labs is an independent R&amp;D studio engineering high-performance WebGL graphics, photorealistic synthetic datasets, and generative 3D modeling tools for digital builders worldwide.
+        JRPCrew Labs is a multidisciplinary studio researching, architecting, and launching forward-thinking products. We build high-performance software across spatial computing, applied artificial intelligence, automation, and cross-industry digital ventures.
       </p>
+
+      <div class="sector-pills">
+        <span class="sector-pill">3D WebGL Graphics</span>
+        <span class="sector-pill">Applied Machine Learning</span>
+        <span class="sector-pill">Synthetic Vision Datasets</span>
+        <span class="sector-pill">Interactive Software</span>
+        <span class="sector-pill">Venture Incubation</span>
+      </div>
 
       <div class="hero-actions">
         <a href="https://brickmine3d.jrpcrewlabs.com" class="btn-primary">
-          <span>Explore Brickmine3D</span>
+          <span>Explore Flagship: Brickmine3D</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
         <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="btn-secondary">
@@ -798,31 +911,31 @@
       </div>
     </section>
 
-    <!-- Lab Projects & Products Section -->
+    <!-- Products & Ventures Section -->
     <div class="section-header">
       <div>
-        <h2 class="section-title">Products &amp; Research</h2>
-        <p class="section-subtitle">Flagship applications and active technical experiments deployed from the lab.</p>
+        <h2 class="section-title">Products &amp; Ventures</h2>
+        <p class="section-subtitle">Flagship production releases, applied research labs, and active exploratory ventures.</p>
       </div>
     </div>
 
     <section class="products-grid">
-      <!-- Card 1: Brickmine3D -->
+      <!-- Card 1: Brickmine3D (Flagship Product) -->
       <div class="product-card flagship">
         <div class="card-top">
           <div class="card-badge-row">
-            <span class="status-badge live">● Live Production</span>
+            <span class="status-badge flagship">● Flagship SaaS • Live</span>
             <span class="card-version">v1.2.4</span>
           </div>
           <h3 class="card-title">Brickmine3D</h3>
           <p class="card-description">
-            Instant in-browser 3D WebGL studio for digital brick CAD models (.ldr, .mpd, .io). Zero cloud GPU fees, real-time plastic subsurface scattering, 4K multi-angle stills, and 60 FPS turntable video loops.
+            Production-grade in-browser 3D WebGL rendering studio for digital brick CAD models (.ldr, .mpd, .io). Zero cloud GPU fees, real-time plastic reflections, instant 4K multi-angle stills, and 60 FPS turntable video loops.
           </p>
           <div class="tech-tags">
-            <span class="tech-tag">Three.js</span>
             <span class="tech-tag">WebGL 2.0</span>
+            <span class="tech-tag">Three.js</span>
             <span class="tech-tag">WebCodecs 60FPS</span>
-            <span class="tech-tag">Deterministic Muxer</span>
+            <span class="tech-tag">H.264 Muxer</span>
           </div>
         </div>
         <div>
@@ -833,51 +946,52 @@
         </div>
       </div>
 
-      <!-- Card 2: Spatial AI & BrickVQA -->
-      <div class="product-card research">
+      <!-- Card 2: Spatial AI & BrickVQA (Research Lab) -->
+      <div class="product-card ai-lab">
         <div class="card-top">
           <div class="card-badge-row">
-            <span class="status-badge active-research">🔬 Active Research</span>
+            <span class="status-badge research">🔬 Applied AI Lab</span>
             <span class="card-version">Phase 5</span>
           </div>
-          <h3 class="card-title">BrickVQA &amp; Spatial AI</h3>
+          <h3 class="card-title">Spatial AI &amp; Vision</h3>
           <p class="card-description">
-            Multimodal synthetic dataset engine and spatial reasoning benchmark. Bridging complex hierarchical digital CAD files with life-sized physical photorealism for foundation vision models.
+            Multimodal synthetic dataset engine and spatial reasoning benchmark. Bridging hierarchical digital CAD structures with photorealistic physical life-sized scenes for foundation vision models.
           </p>
           <div class="tech-tags">
-            <span class="tech-tag">Computer Vision</span>
             <span class="tech-tag">Spatial Datasets</span>
-            <span class="tech-tag">Gemini Vision</span>
+            <span class="tech-tag">Vision AI</span>
             <span class="tech-tag">Qwen2.5-VL</span>
+            <span class="tech-tag">Multimodal VQA</span>
           </div>
         </div>
         <div>
           <a href="https://brickmine3d.jrpcrewlabs.com/spatial-ai" target="_blank" rel="noopener" class="card-action-btn">
-            <span>View Dataset Architecture</span>
+            <span>Explore Dataset Architecture</span>
             <span>➔</span>
           </a>
         </div>
       </div>
 
-      <!-- Card 3: Generative Assembly Lab -->
-      <div class="product-card experimental">
+      <!-- Card 3: Multi-Sector Ventures & Incubator -->
+      <div class="product-card ventures">
         <div class="card-top">
           <div class="card-badge-row">
-            <span class="status-badge incubator">⚡ Incubator</span>
-            <span class="card-version">Exploratory</span>
+            <span class="status-badge incubation">⚡ Venture Incubator</span>
+            <span class="card-version">Active</span>
           </div>
-          <h3 class="card-title">Generative Assembly Lab</h3>
+          <h3 class="card-title">Emerging Ventures</h3>
           <p class="card-description">
-            Automated step-by-step 3D building instruction synthesis and graph decomposition. Exploring interactive spatial assembly guidance and physical-to-digital scanning pipelines.
+            Cross-industry technical experiments exploring personal automation tools, generative developer systems, spatial assembly graph models, and experimental consumer software.
           </p>
           <div class="tech-tags">
-            <span class="tech-tag">Spatial Graphs</span>
-            <span class="tech-tag">CAD Decomposition</span>
-            <span class="tech-tag">Procedural Meshes</span>
+            <span class="tech-tag">Interactive Tools</span>
+            <span class="tech-tag">Automation</span>
+            <span class="tech-tag">Graph Networks</span>
+            <span class="tech-tag">New Markets</span>
           </div>
         </div>
         <div>
-          <div class="card-action-btn" style="opacity: 0.6; cursor: default;">
+          <div class="card-action-btn" style="opacity: 0.75; cursor: default;">
             <span>Under Active Incubation</span>
             <span>🔒</span>
           </div>
@@ -885,11 +999,11 @@
       </div>
     </section>
 
-    <!-- YouTube / Lab Snippets Showcase -->
+    <!-- Lab Video / Media Showcase -->
     <div class="section-header">
       <div>
-        <h2 class="section-title">Lab Snippets &amp; Video Previews</h2>
-        <p class="section-subtitle">Real-time demos, 3D workflow walkthroughs, and studio render reels.</p>
+        <h2 class="section-title">Studio Demos &amp; Workflow Previews</h2>
+        <p class="section-subtitle">Real-time demos, technical walkthroughs, and product releases from the lab.</p>
       </div>
     </div>
 
@@ -902,12 +1016,12 @@
           </a>
         </div>
         <div class="media-content">
-          <div class="hero-badge" style="margin-bottom: 0.8rem; background: rgba(255, 109, 0, 0.1); border-color: var(--border-orange); color: var(--brand-orange);">
+          <div class="hero-badge" style="margin-bottom: 0.8rem; background: var(--brand-orange-bg); border-color: var(--brand-orange-border); color: var(--brand-orange);">
             <span>FEATURED VIDEO DEMO</span>
           </div>
-          <h3>Zero-Install 3D WebGL Rendering with Realtime Light Physics</h3>
+          <h3>In-Browser 3D Graphics with Deterministic 60 FPS Hardware Synthesis</h3>
           <p>
-            Watch how Brickmine3D imports raw LDraw CAD hierarchies directly in Google Chrome, calculates plastic specular highlights, and synthesizes 60 FPS continuous orbital turntable video loops in microsecond hardware blocks.
+            Experience how our flagship studio imports raw CAD models directly in standard web browsers, computes physical plastic shaders in real time, and synthesizes 60 FPS turntable video loops using client-side WebCodecs.
           </p>
           <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="btn-primary" style="display: inline-flex;">
             <span>Subscribe on YouTube (@JRPCrew)</span>
@@ -1021,7 +1135,7 @@
     <!-- Footer -->
     <footer>
       <div class="footer-left">
-        <span>&copy; 2026 JRPCrew Labs. Built for builders.</span>
+        <span>&copy; 2026 JRPCrew Labs. Independent Technology Studio.</span>
       </div>
       <div class="footer-links">
         <a href="https://brickmine3d.jrpcrewlabs.com/privacy" class="footer-link">Privacy Policy</a>
@@ -1029,6 +1143,56 @@
       </div>
     </footer>
   </div>
+
+  <!-- Day / Night Theme Controller Script -->
+  <script>
+    (function() {
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const themeIcon = document.getElementById('themeIcon');
+      const htmlEl = document.documentElement;
+
+      // 1. Determine initial theme: saved preference -> system dark mode -> default light
+      const savedTheme = localStorage.getItem('jrp_theme');
+      let currentTheme = 'light';
+
+      if (savedTheme) {
+        currentTheme = savedTheme;
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        currentTheme = 'dark';
+      }
+
+      function applyTheme(theme) {
+        htmlEl.setAttribute('data-theme', theme);
+        localStorage.setItem('jrp_theme', theme);
+        if (theme === 'dark') {
+          themeIcon.textContent = '🌙';
+          themeToggleBtn.setAttribute('title', 'Switch to Day Mode (Light)');
+        } else {
+          themeIcon.textContent = '☀️';
+          themeToggleBtn.setAttribute('title', 'Switch to Night Mode (Dark)');
+        }
+      }
+
+      // Initial apply
+      applyTheme(currentTheme);
+
+      // Toggle click
+      themeToggleBtn.addEventListener('click', function() {
+        const activeTheme = htmlEl.getAttribute('data-theme');
+        const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(nextTheme);
+      });
+
+      // Listen for OS theme changes if user has not explicitly chosen
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+          if (!localStorage.getItem('jrp_theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      }
+    })();
+  </script>
 
 </body>
 </html>
