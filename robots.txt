@@ -1,0 +1,23 @@
+# Robots.txt for JRPCrew Labs
+# Enables indexing for major search engines and modern AI crawlers
+
+User-agent: *
+Allow: /
+
+# AI Crawlers (Perplexity, OpenAI ChatGPT, Anthropic Claude, Google Gemini)
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://www.jrpcrewlabs.com/sitemap.xml
