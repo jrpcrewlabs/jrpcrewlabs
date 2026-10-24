@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JRPCrew Labs — Creative Engineering & Spatial 3D Studio</title>
+  <meta name="description" content="Official home of JRPCrew Labs. Creators of Brickmine3D, spatial AI datasets, and next-generation in-browser 3D WebGL tools.">
+  <meta name="theme-color" content="#0B0F17">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/jrp_crew_logo.png">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Brand Color System: Emerald Green, Radiant Sunset Orange, Crisp White */
+      --brand-green: #00E676;
+      --brand-green-hover: #00C853;
+      --brand-green-glow: rgba(0, 230, 118, 0.22);
+      
+      --brand-orange: #FF6D00;
+      --brand-orange-hover: #F55100;
+      --brand-orange-glow: rgba(255, 109, 0, 0.22);
+
+      --brand-white: #FFFFFF;
+      --brand-white-muted: #E2E8F0;
+      --text-dim: #94A3B8;
+
+      --bg-dark: #080B10;
+      --bg-card: rgba(16, 22, 34, 0.75);
+      --bg-card-hover: rgba(24, 32, 48, 0.9);
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-green: rgba(0, 230, 118, 0.35);
+      --border-orange: rgba(255, 109, 0, 0.35);
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-display: 'Space Grotesk', var(--font-sans);
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--brand-white);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient dynamic backdrop glow */
+    .ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(0, 230, 118, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 85% 30%, rgba(255, 109, 0, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 85%, rgba(0, 230, 118, 0.08) 0%, transparent 45%);
+    }
+
+    /* Subtle grid pattern */
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+
+    /* Navigation Bar */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 3.5rem;
+    }
+
+    .brand-logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+    }
+
+    .brand-logo-img {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 0 20px var(--brand-green-glow);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: transform 0.25s ease;
+    }
+
+    .brand-logo-lockup:hover .brand-logo-img {
+      transform: scale(1.06) rotate(-2deg);
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--brand-white);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-title .labs-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--brand-green), var(--brand-orange));
+      color: #000;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+    }
+
+    .nav-socials {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius-full);
+      color: var(--brand-white);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .nav-pill-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--brand-green);
+      box-shadow: 0 0 15px var(--brand-green-glow);
+      color: var(--brand-green);
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto 5rem;
+      padding: 2rem 0 1rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: rgba(0, 230, 118, 0.08);
+      border: 1px solid var(--border-green);
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--brand-green);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--brand-green);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--brand-green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(0, 230, 118, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .text-gradient-green {
+      background: linear-gradient(135deg, #FFFFFF 30%, var(--brand-green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h1 .text-gradient-orange {
+      background: linear-gradient(135deg, var(--brand-orange) 0%, #FFAB40 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--brand-green);
+      color: #051408;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      box-shadow: 0 0 25px var(--brand-green-glow);
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-green-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(0, 230, 118, 0.45);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(255, 109, 0, 0.1);
+      color: var(--brand-orange);
+      border: 1px solid var(--border-orange);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-secondary:hover {
+      background: var(--brand-orange);
+      color: #FFFFFF;
+      box-shadow: 0 0 30px var(--brand-orange-glow);
+      transform: translateY(-2px);
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      margin-top: 0.25rem;
+    }
+
+    /* Products & Creations Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 5rem;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+
+    .product-card.flagship::before {
+      background: linear-gradient(90deg, var(--brand-green), var(--brand-orange));
+    }
+
+    .product-card.research::before {
+      background: var(--brand-orange);
+    }
+
+    .product-card.experimental::before {
+      background: var(--border-subtle);
+    }
+
+    .product-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .product-card.flagship:hover {
+      border-color: var(--border-green);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px var(--brand-green-glow);
+    }
+
+    .card-top {
+      margin-bottom: 1.5rem;
+    }
+
+    .card-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .status-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .status-badge.live {
+      background: rgba(0, 230, 118, 0.12);
+      color: var(--brand-green);
+      border: 1px solid var(--border-green);
+    }
+
+    .status-badge.active-research {
+      background: rgba(255, 109, 0, 0.12);
+      color: var(--brand-orange);
+      border: 1px solid var(--border-orange);
+    }
+
+    .status-badge.incubator {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--brand-white-muted);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .card-version {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--brand-white);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card-description {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 2rem;
+    }
+
+    .tech-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--brand-white-muted);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .card-action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.2rem;
+      color: var(--brand-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .card-action-btn:hover {
+      background: var(--brand-white);
+      color: #000;
+      border-color: var(--brand-white);
+      transform: translateY(-2px);
+    }
+
+    .card-action-btn.primary {
+      background: var(--brand-green);
+      color: #000;
+      border-color: var(--brand-green);
+      font-weight: 700;
+    }
+
+    .card-action-btn.primary:hover {
+      background: #00ff83;
+      box-shadow: 0 0 20px var(--brand-green-glow);
+    }
+
+    /* Media & Snippets Showcase Section */
+    .media-section {
+      margin-bottom: 5rem;
+    }
+
+    .media-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (max-width: 860px) {
+      .media-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .media-preview-container {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: #000;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .media-preview-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .media-preview-container:hover img {
+      transform: scale(1.03);
+      opacity: 0.95;
+    }
+
+    .play-badge-overlay {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: var(--brand-orange);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      box-shadow: 0 0 30px var(--brand-orange-glow);
+      pointer-events: none;
+      transition: transform 0.25s ease;
+    }
+
+    .media-preview-container:hover .play-badge-overlay {
+      transform: scale(1.12);
+    }
+
+    .media-content h3 {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .media-content p {
+      color: var(--text-dim);
+      font-size: 1rem;
+      margin-bottom: 1.75rem;
+      line-height: 1.6;
+    }
+
+    /* Socials & Channels Matrix */
+    .socials-section {
+      margin-bottom: 5rem;
+    }
+
+    .socials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .social-pill-card {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.35rem;
+      text-decoration: none;
+      color: var(--brand-white);
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .social-pill-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-3px);
+      border-color: var(--border-green);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .social-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .social-pill-card:hover .social-icon-box {
+      transform: scale(1.1);
+    }
+
+    .icon-yt { background: rgba(255, 0, 0, 0.15); color: #FF3333; }
+    .icon-tt { background: rgba(0, 242, 254, 0.15); color: #00F2FE; }
+    .icon-ig { background: rgba(225, 48, 108, 0.15); color: #E1306C; }
+    .icon-fb { background: rgba(24, 119, 242, 0.15); color: #1877F2; }
+    .icon-rd { background: rgba(255, 69, 0, 0.15); color: #FF4500; }
+    .icon-tw { background: rgba(255, 255, 255, 0.1); color: #FFFFFF; }
+    .icon-li { background: rgba(10, 102, 194, 0.15); color: #0A66C2; }
+
+    .social-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .social-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--brand-white);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .social-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 1px 6px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 109, 0, 0.15);
+      color: var(--brand-orange);
+      border: 1px solid var(--border-orange);
+    }
+
+    .social-handle {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .social-arrow {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .social-pill-card:hover .social-arrow {
+      color: var(--brand-green);
+      transform: translateX(3px);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 3rem 0 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .footer-link {
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--brand-white);
+    }
+
+    .contact-email {
+      font-family: var(--font-mono);
+      color: var(--brand-green);
+      text-decoration: none;
+    }
+    .contact-email:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 1.2rem;
+        align-items: flex-start;
+      }
+      .nav-socials {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-canvas"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="wrapper">
+    <!-- Header -->
+    <header>
+      <a href="/" class="brand-logo-lockup">
+        <img src="assets/jrp_crew_logo.png" alt="JRPCrew Labs Logo" class="brand-logo-img">
+        <div class="brand-title">
+          JRPCrew <span class="labs-tag">Labs</span>
+        </div>
+      </a>
+
+      <div class="nav-socials">
+        <a href="https://brickmine3d.jrpcrewlabs.com/studio" class="nav-pill-btn">
+          <span>Launch Studio 3D</span>
+          <span style="color: var(--brand-green);">⚡</span>
+        </a>
+        <a href="mailto:support@jrpcrewlabs.com" class="nav-pill-btn">
+          <span>Contact Lab</span>
+          <span>✉</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        <span>CREATIVE ENGINEERING &amp; SPATIAL 3D LAB</span>
+      </div>
+
+      <h1>
+        Building the Future of <br>
+        <span class="text-gradient-green">In-Browser 3D</span> &amp; <span class="text-gradient-orange">Spatial Brick AI</span>
+      </h1>
+
+      <p>
+        JRPCrew Labs is an independent R&amp;D studio engineering high-performance WebGL graphics, photorealistic synthetic datasets, and generative 3D modeling tools for digital builders worldwide.
+      </p>
+
+      <div class="hero-actions">
+        <a href="https://brickmine3d.jrpcrewlabs.com" class="btn-primary">
+          <span>Explore Brickmine3D</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+        <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="btn-secondary">
+          <span>Watch Lab Previews</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Lab Projects & Products Section -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Products &amp; Research</h2>
+        <p class="section-subtitle">Flagship applications and active technical experiments deployed from the lab.</p>
+      </div>
+    </div>
+
+    <section class="products-grid">
+      <!-- Card 1: Brickmine3D -->
+      <div class="product-card flagship">
+        <div class="card-top">
+          <div class="card-badge-row">
+            <span class="status-badge live">● Live Production</span>
+            <span class="card-version">v1.2.4</span>
+          </div>
+          <h3 class="card-title">Brickmine3D</h3>
+          <p class="card-description">
+            Instant in-browser 3D WebGL studio for digital brick CAD models (.ldr, .mpd, .io). Zero cloud GPU fees, real-time plastic subsurface scattering, 4K multi-angle stills, and 60 FPS turntable video loops.
+          </p>
+          <div class="tech-tags">
+            <span class="tech-tag">Three.js</span>
+            <span class="tech-tag">WebGL 2.0</span>
+            <span class="tech-tag">WebCodecs 60FPS</span>
+            <span class="tech-tag">Deterministic Muxer</span>
+          </div>
+        </div>
+        <div>
+          <a href="https://brickmine3d.jrpcrewlabs.com/studio" target="_blank" rel="noopener" class="card-action-btn primary">
+            <span>Launch 3D Studio</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: Spatial AI & BrickVQA -->
+      <div class="product-card research">
+        <div class="card-top">
+          <div class="card-badge-row">
+            <span class="status-badge active-research">🔬 Active Research</span>
+            <span class="card-version">Phase 5</span>
+          </div>
+          <h3 class="card-title">BrickVQA &amp; Spatial AI</h3>
+          <p class="card-description">
+            Multimodal synthetic dataset engine and spatial reasoning benchmark. Bridging complex hierarchical digital CAD files with life-sized physical photorealism for foundation vision models.
+          </p>
+          <div class="tech-tags">
+            <span class="tech-tag">Computer Vision</span>
+            <span class="tech-tag">Spatial Datasets</span>
+            <span class="tech-tag">Gemini Vision</span>
+            <span class="tech-tag">Qwen2.5-VL</span>
+          </div>
+        </div>
+        <div>
+          <a href="https://brickmine3d.jrpcrewlabs.com/spatial-ai" target="_blank" rel="noopener" class="card-action-btn">
+            <span>View Dataset Architecture</span>
+            <span>➔</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: Generative Assembly Lab -->
+      <div class="product-card experimental">
+        <div class="card-top">
+          <div class="card-badge-row">
+            <span class="status-badge incubator">⚡ Incubator</span>
+            <span class="card-version">Exploratory</span>
+          </div>
+          <h3 class="card-title">Generative Assembly Lab</h3>
+          <p class="card-description">
+            Automated step-by-step 3D building instruction synthesis and graph decomposition. Exploring interactive spatial assembly guidance and physical-to-digital scanning pipelines.
+          </p>
+          <div class="tech-tags">
+            <span class="tech-tag">Spatial Graphs</span>
+            <span class="tech-tag">CAD Decomposition</span>
+            <span class="tech-tag">Procedural Meshes</span>
+          </div>
+        </div>
+        <div>
+          <div class="card-action-btn" style="opacity: 0.6; cursor: default;">
+            <span>Under Active Incubation</span>
+            <span>🔒</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- YouTube / Lab Snippets Showcase -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Lab Snippets &amp; Video Previews</h2>
+        <p class="section-subtitle">Real-time demos, 3D workflow walkthroughs, and studio render reels.</p>
+      </div>
+    </div>
+
+    <section class="media-section">
+      <div class="media-card">
+        <div class="media-preview-container">
+          <img src="assets/og_preview.png" alt="Brickmine3D Studio Realtime Render">
+          <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="play-badge-overlay" title="Watch on YouTube">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </a>
+        </div>
+        <div class="media-content">
+          <div class="hero-badge" style="margin-bottom: 0.8rem; background: rgba(255, 109, 0, 0.1); border-color: var(--border-orange); color: var(--brand-orange);">
+            <span>FEATURED VIDEO DEMO</span>
+          </div>
+          <h3>Zero-Install 3D WebGL Rendering with Realtime Light Physics</h3>
+          <p>
+            Watch how Brickmine3D imports raw LDraw CAD hierarchies directly in Google Chrome, calculates plastic specular highlights, and synthesizes 60 FPS continuous orbital turntable video loops in microsecond hardware blocks.
+          </p>
+          <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="btn-primary" style="display: inline-flex;">
+            <span>Subscribe on YouTube (@JRPCrew)</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Socials & Community Channels Matrix -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Connect with JRPCrew</h2>
+        <p class="section-subtitle">Follow our builds, development updates, video shorts, and official announcements across all channels.</p>
+      </div>
+    </div>
+
+    <section class="socials-section">
+      <div class="socials-grid">
+
+        <!-- 1. YouTube -->
+        <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="social-pill-card">
+          <div class="social-icon-box icon-yt">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </div>
+          <div class="social-details">
+            <div class="social-name">YouTube</div>
+            <div class="social-handle">@JRPCrew</div>
+          </div>
+          <div class="social-arrow">➔</div>
+        </a>
+
+        <!-- 2. TikTok -->
+        <a href="https://www.tiktok.com/@jrpcrew" target="_blank" rel="noopener" class="social-pill-card">
+          <div class="social-icon-box icon-tt">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </div>
+          <div class="social-details">
+            <div class="social-name">TikTok</div>
+            <div class="social-handle">@jrpcrew</div>
+          </div>
+          <div class="social-arrow">➔</div>
+        </a>
+
+        <!-- 3. Instagram -->
+        <a href="https://www.instagram.com/jrpcrew/" target="_blank" rel="noopener" class="social-pill-card">
+          <div class="social-icon-box icon-ig">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </div>
+          <div class="social-details">
+            <div class="social-name">Instagram</div>
+            <div class="social-handle">@jrpcrew</div>
+          </div>
+          <div class="social-arrow">➔</div>
+        </a>
+
+        <!-- 4. Facebook Page -->
+        <a href="https://www.facebook.com/jrpcrew" target="_blank" rel="noopener" class="social-pill-card">
+          <div class="social-icon-box icon-fb">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </div>
+          <div class="social-details">
+            <div class="social-name">Facebook Page</div>
+            <div class="social-handle">JRP Crew</div>
+          </div>
+          <div class="social-arrow">➔</div>
+        </a>
+
+        <!-- 5. Reddit -->
+        <a href="https://www.reddit.com/r/brickmine3d" target="_blank" rel="noopener" class="social-pill-card">
+          <div class="social-icon-box icon-rd">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.197-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          </div>
+          <div class="social-details">
+            <div class="social-name">Reddit</div>
+            <div class="social-handle">r/brickmine3d</div>
+          </div>
+          <div class="social-arrow">➔</div>
+        </a>
+
+        <!-- 6. X (Twitter) -->
+        <a href="https://twitter.com/JRPCrewLabs" target="_blank" rel="noopener" class="social-pill-card">
+          <div class="social-icon-box icon-tw">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </div>
+          <div class="social-details">
+            <div class="social-name">X (Twitter)</div>
+            <div class="social-handle">@JRPCrewLabs</div>
+          </div>
+          <div class="social-arrow">➔</div>
+        </a>
+
+        <!-- 7. LinkedIn -->
+        <a href="https://www.linkedin.com/company/jrpcrewlabs" target="_blank" rel="noopener" class="social-pill-card">
+          <div class="social-icon-box icon-li">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          </div>
+          <div class="social-details">
+            <div class="social-name">
+              LinkedIn
+              <span class="social-badge">Soon</span>
+            </div>
+            <div class="social-handle">company/jrpcrewlabs</div>
+          </div>
+          <div class="social-arrow">➔</div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-left">
+        <span>&copy; 2026 JRPCrew Labs. Built for builders.</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://brickmine3d.jrpcrewlabs.com/privacy" class="footer-link">Privacy Policy</a>
+        <a href="mailto:support@jrpcrewlabs.com" class="contact-email">support@jrpcrewlabs.com</a>
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>
