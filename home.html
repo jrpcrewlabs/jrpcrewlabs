@@ -627,6 +627,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .media-preview-container:hover {
+      box-shadow: 0 15px 35px var(--brand-orange-glow);
+      border-color: var(--brand-orange-border);
     }
 
     .media-preview-container img {
@@ -1013,12 +1021,12 @@
 
     <section class="media-section">
       <div class="media-card">
-        <div class="media-preview-container">
+        <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="media-preview-container" title="Watch Studio Demos &amp; Walkthroughs on YouTube (@JRPCrew)">
           <img src="assets/demo_preview.png" alt="In-Browser 3D Rendering">
-          <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="play-badge-overlay" title="Watch on YouTube">
+          <div class="play-badge-overlay">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          </a>
-        </div>
+          </div>
+        </a>
         <div class="media-content">
           <div class="hero-badge" style="margin-bottom: 0.8rem; background: var(--brand-orange-bg); border-color: var(--brand-orange-border); color: var(--brand-orange);">
             <span>FEATURED VIDEO DEMO</span>
