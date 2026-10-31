@@ -650,14 +650,12 @@
       border-radius: var(--radius-md);
       overflow: hidden;
       border: 1px solid var(--border-subtle);
-      background: #000;
+      background: #080B10;
       box-shadow: var(--card-shadow);
       aspect-ratio: 16 / 9;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      text-decoration: none;
       transition: all 0.3s ease;
     }
 
@@ -666,36 +664,106 @@
       border-color: var(--brand-orange-border);
     }
 
-    .media-preview-container img {
+    .media-preview-video,
+    .media-preview-still {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.9;
+      display: block;
       transition: transform 0.4s ease, opacity 0.4s ease;
     }
 
-    .media-preview-container:hover img {
-      transform: scale(1.03);
-      opacity: 1;
+    .media-preview-container:hover .media-preview-video,
+    .media-preview-container:hover .media-preview-still {
+      transform: scale(1.02);
     }
 
-    .play-badge-overlay {
+    .gallery-media-controls {
       position: absolute;
-      width: 62px;
-      height: 62px;
-      background: var(--brand-orange);
-      border-radius: 50%;
+      top: 12px;
+      right: 12px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FFFFFF;
-      box-shadow: 0 4px 20px var(--brand-orange-glow);
-      pointer-events: none;
-      transition: transform 0.25s ease;
+      gap: 4px;
+      background: rgba(7, 8, 11, 0.88);
+      padding: 3px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      z-index: 10;
     }
 
-    .media-preview-container:hover .play-badge-overlay {
-      transform: scale(1.12);
+    .gallery-toggle-btn {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .gallery-toggle-btn:hover {
+      color: #FFFFFF;
+    }
+
+    .gallery-toggle-btn.active {
+      background: var(--brand-orange);
+      color: #FFFFFF;
+      font-weight: 700;
+      box-shadow: 0 2px 8px var(--brand-orange-glow);
+    }
+
+    .media-aspect-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--brand-orange);
+      background: rgba(10, 13, 20, 0.88);
+      border: 1px solid var(--brand-orange-border);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      z-index: 10;
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.04em;
+    }
+
+    .media-yt-watermark {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(10, 13, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
+    }
+
+    .media-yt-watermark:hover {
+      border-color: #FF0000;
+      background: rgba(255, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.35);
+      color: #FFFFFF;
+    }
+
+    .gallery-protection-shield {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
     }
 
     .media-content h3 {
@@ -1050,24 +1118,51 @@
 
     <section class="media-section">
       <div class="media-card">
-        <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="media-preview-container" title="Watch Studio Demos &amp; Walkthroughs on YouTube (@JRPCrew)">
-          <img src="assets/demo_preview.png" alt="In-Browser 3D Rendering">
-          <div class="play-badge-overlay">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        <div class="media-preview-container" id="demoMediaContainer">
+          <div class="media-aspect-badge mono">16:9 • 60 FPS TURNTABLE</div>
+          <div class="gallery-media-controls">
+            <button class="gallery-toggle-btn active" id="btnToggleTurntable" onclick="toggleDemoMedia('turntable', this)">360° Turntable</button>
+            <button class="gallery-toggle-btn" id="btnToggleStill" onclick="toggleDemoMedia('still', this)">4K Still</button>
           </div>
-        </a>
+          <div class="gallery-protection-shield" oncontextmenu="return false;"></div>
+          
+          <video id="firebirdTurntableVideo" autoplay loop muted playsinline poster="assets/phoenix_firebird_turntable_16x9_hero.png" preload="auto" class="media-preview-video" title="Phoenix Firebird 360° Turntable Video (16:9 • 60 FPS)">
+            <source src="assets/phoenix_firebird_turntable_16x9.mp4" type="video/mp4">
+          </video>
+          
+          <img id="firebirdHeroStill" src="assets/phoenix_firebird_turntable_16x9_hero.png" alt="Phoenix Firebird 3D Studio CAD Render" class="media-preview-still" style="display: none;">
+          
+          <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="media-yt-watermark" title="Watch Studio Walkthroughs on YouTube (@JRPCrew)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            <span class="mono">YouTube Demo</span>
+            <span>↗</span>
+          </a>
+        </div>
+        
         <div class="media-content">
           <div class="hero-badge" style="margin-bottom: 0.8rem; background: var(--brand-orange-bg); border-color: var(--brand-orange-border); color: var(--brand-orange);">
             <span>THE CREATIVE WORKSHOP IN ACTION</span>
           </div>
-          <h3>From Physical Brick Builds to In-Browser 60 FPS 3D Synthesis</h3>
+          <h3>Phoenix Firebird: 60 FPS 16:9 Turntable &amp; In-Browser 3D Synthesis</h3>
           <p>
-            Experience how our lab bridges hands-on physical building with client-side WebGL code. We test our own custom MOCs directly in Brickmine3D, computing physical plastic shaders and synthesizing 60 FPS turntable video loops using client-side WebCodecs.
+            Experience how our lab bridges hands-on physical building with client-side WebGL code. We test our own custom MOCs directly in Brickmine3D, computing ray-traced ABS plastic shaders and synthesizing silky-smooth 60 FPS turntable video loops using client-side WebCodecs with zero cloud GPU fees.
           </p>
-          <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="btn-primary" style="display: inline-flex;">
-            <span>Subscribe on YouTube (@JRPCrew)</span>
-            <span>↗</span>
-          </a>
+          <div style="display: flex; gap: 0.85rem; align-items: center; flex-wrap: wrap;">
+            <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              <span>Subscribe on YouTube (@JRPCrew)</span>
+              <span>↗</span>
+            </a>
+            <a href="https://brickmine3d.jrpcrewlabs.com/studio.html?model=phoenix" target="_blank" rel="noopener" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.75rem 1.25rem;">
+              <span>Open in 3D Studio</span>
+              <span>➔</span>
+            </a>
+          </div>
+          <div class="demo-specs-row mono" style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-subtle); display: flex; gap: 1.25rem; font-size: 0.75rem; color: var(--text-dim); flex-wrap: wrap;">
+            <div><span style="color: var(--text-muted); font-weight: 700;">MODEL:</span> Phoenix Firebird (520 pcs)</div>
+            <div><span style="color: var(--text-muted); font-weight: 700;">FORMAT:</span> 16:9 Widescreen (1080p)</div>
+            <div><span style="color: var(--brand-orange); font-weight: 700;">FRAMERATE:</span> 60 FPS Hardware Loop</div>
+          </div>
         </div>
       </div>
     </section>
@@ -1230,6 +1325,38 @@
         });
       }
     })();
+
+    // 360° Turntable / 4K Still Toggle Controller
+    function toggleDemoMedia(type, btn) {
+      const video = document.getElementById('firebirdTurntableVideo');
+      const still = document.getElementById('firebirdHeroStill');
+      const container = document.getElementById('demoMediaContainer');
+      if (!video || !still) return;
+
+      if (container) {
+        const buttons = container.querySelectorAll('.gallery-toggle-btn');
+        buttons.forEach(b => b.classList.remove('active'));
+      }
+      if (btn) btn.classList.add('active');
+
+      if (type === 'turntable') {
+        still.style.display = 'none';
+        video.style.display = 'block';
+        video.play().catch(() => {});
+      } else if (type === 'still') {
+        video.pause();
+        video.style.display = 'none';
+        still.style.display = 'block';
+      }
+    }
+
+    // Media asset protection
+    document.addEventListener('contextmenu', function(e) {
+      if (e.target.closest('#demoMediaContainer')) {
+        e.preventDefault();
+        return false;
+      }
+    }, { capture: true });
   </script>
 
 </body>
