@@ -1210,7 +1210,7 @@
             <source src="assets/phoenix_firebird_turntable_16x9.mp4" type="video/mp4">
           </video>
           
-          <video id="firebirdDynamicVideo" loop muted playsinline poster="assets/phoenix_firebird_dynamic_director_poster.jpg" preload="auto" class="media-preview-video" style="display: none; object-fit: contain;" title="Phoenix Firebird Dynamic Director Video (9:16 • 60 FPS)">
+          <video id="firebirdDynamicVideo" loop muted playsinline poster="assets/phoenix_firebird_dynamic_director_poster.jpg" preload="auto" class="media-preview-video" style="display: none;" title="Phoenix Firebird Dynamic Director Video (16:9 • 60 FPS)">
             <source src="assets/phoenix_firebird_dynamic_director.mp4" type="video/mp4">
           </video>
           
@@ -1456,7 +1456,7 @@
           dynamicVideo.style.display = 'block';
           dynamicVideo.play().catch(() => {});
         }
-        if (badge) badge.textContent = '9:16 • 60 FPS DYNAMIC DIRECTOR';
+        if (badge) badge.textContent = '16:9 • 60 FPS DYNAMIC DIRECTOR';
       } else if (type === 'still') {
         still.style.display = 'block';
         if (badge) badge.textContent = '4K STUDIO STILL • 3840×2160';

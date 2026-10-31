@@ -25,7 +25,7 @@
 - **Hero Showcase Asset:** Flagship **Phoenix Firebird** (Proprietary 3D Mesh Asset) replacing all legacy third-party community models.
 - **Rendering Pipeline:** Standardized generation of 8x 4K studio stills, seamless 360° turntable loops, and cinematic dynamic director videos across 4 aspect ratios (`9:16`, `1:1`, `4:5`, `16:9`).
 - **Turntable Video:** 16:9 widescreen, 60 FPS hardware loop (`assets/phoenix_firebird_turntable_16x9.mp4`) synthesized via Three.js WebGL & WebCodecs with zero cloud GPU fees.
-- **Dynamic Director Video:** 9:16 mobile-optimized, 60 FPS spiral ascent camera flight (`assets/phoenix_firebird_dynamic_director.mp4`) demonstrating cinematic automated camera paths.
+- **Dynamic Director Video:** 16:9 widescreen, 60 FPS dynamic camera flight (`assets/phoenix_firebird_dynamic_director.mp4`) demonstrating cinematic automated camera paths.
 - **Hero Stills:** 16:9 4K render still (`assets/phoenix_firebird_turntable_16x9_hero.png`) and fallback poster (`assets/demo_preview.png`).
 - **Brickmine3D Showcase Controls:** Interactive `360° Turntable` ⟷ `Dynamic Video` ⟷ `4K Still` 3-mode switcher with asset protection.
 - **Direct Engagement:** Direct YouTube subscription action (`@JRPCrew`) paired with deep-linked 3D Studio launch action.
