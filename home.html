@@ -1007,6 +1007,25 @@
         align-items: flex-start;
       }
     }
+
+    @media (max-width: 600px) {
+      .media-aspect-badge {
+        font-size: 0.58rem;
+        padding: 3px 6px;
+        top: 8px;
+        left: 8px;
+      }
+      .gallery-media-controls {
+        top: 8px;
+        right: 8px;
+        padding: 2px;
+        gap: 2px;
+      }
+      .gallery-toggle-btn {
+        font-size: 0.6rem;
+        padding: 3px 6px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1179,15 +1198,20 @@
     <section class="media-section">
       <div class="media-card">
         <div class="media-preview-container" id="demoMediaContainer">
-          <div class="media-aspect-badge mono">16:9 • 60 FPS TURNTABLE</div>
+          <div class="media-aspect-badge mono" id="demoAspectBadge">16:9 • 60 FPS TURNTABLE</div>
           <div class="gallery-media-controls">
             <button class="gallery-toggle-btn active" id="btnToggleTurntable" onclick="toggleDemoMedia('turntable', this)">360° Turntable</button>
+            <button class="gallery-toggle-btn" id="btnToggleDynamic" onclick="toggleDemoMedia('dynamic', this)">Dynamic Video</button>
             <button class="gallery-toggle-btn" id="btnToggleStill" onclick="toggleDemoMedia('still', this)">4K Still</button>
           </div>
           <div class="gallery-protection-shield" oncontextmenu="return false;"></div>
           
           <video id="firebirdTurntableVideo" autoplay loop muted playsinline poster="assets/phoenix_firebird_turntable_16x9_hero.png" preload="auto" class="media-preview-video" title="Phoenix Firebird 360° Turntable Video (16:9 • 60 FPS)">
             <source src="assets/phoenix_firebird_turntable_16x9.mp4" type="video/mp4">
+          </video>
+          
+          <video id="firebirdDynamicVideo" loop muted playsinline poster="assets/phoenix_firebird_dynamic_director_poster.jpg" preload="auto" class="media-preview-video" style="display: none; object-fit: contain;" title="Phoenix Firebird Dynamic Director Video (9:16 • 60 FPS)">
+            <source src="assets/phoenix_firebird_dynamic_director.mp4" type="video/mp4">
           </video>
           
           <img id="firebirdHeroStill" src="assets/phoenix_firebird_turntable_16x9_hero.png" alt="Phoenix Firebird 3D Studio CAD Render" class="media-preview-still" style="display: none;">
@@ -1399,12 +1423,14 @@
       }
     })();
 
-    // 360° Turntable / 4K Still Toggle Controller
+    // 360° Turntable / Dynamic Video / 4K Still Toggle Controller
     function toggleDemoMedia(type, btn) {
-      const video = document.getElementById('firebirdTurntableVideo');
+      const turntableVideo = document.getElementById('firebirdTurntableVideo');
+      const dynamicVideo = document.getElementById('firebirdDynamicVideo');
       const still = document.getElementById('firebirdHeroStill');
       const container = document.getElementById('demoMediaContainer');
-      if (!video || !still) return;
+      const badge = document.getElementById('demoAspectBadge');
+      if (!turntableVideo || !still) return;
 
       if (container) {
         const buttons = container.querySelectorAll('.gallery-toggle-btn');
@@ -1412,14 +1438,28 @@
       }
       if (btn) btn.classList.add('active');
 
+      // Pause and hide all media
+      turntableVideo.pause();
+      turntableVideo.style.display = 'none';
+      if (dynamicVideo) {
+        dynamicVideo.pause();
+        dynamicVideo.style.display = 'none';
+      }
+      still.style.display = 'none';
+
       if (type === 'turntable') {
-        still.style.display = 'none';
-        video.style.display = 'block';
-        video.play().catch(() => {});
+        turntableVideo.style.display = 'block';
+        turntableVideo.play().catch(() => {});
+        if (badge) badge.textContent = '16:9 • 60 FPS TURNTABLE';
+      } else if (type === 'dynamic') {
+        if (dynamicVideo) {
+          dynamicVideo.style.display = 'block';
+          dynamicVideo.play().catch(() => {});
+        }
+        if (badge) badge.textContent = '9:16 • 60 FPS DYNAMIC DIRECTOR';
       } else if (type === 'still') {
-        video.pause();
-        video.style.display = 'none';
         still.style.display = 'block';
+        if (badge) badge.textContent = '4K STUDIO STILL • 3840×2160';
       }
     }
 
