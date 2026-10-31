@@ -457,6 +457,14 @@
       margin-top: 0.25rem;
     }
 
+    h1, h2, h3, .section-title, .card-title, .media-content h3 {
+      text-wrap: balance;
+    }
+
+    p, .card-description, .media-content p, .section-subtitle {
+      text-wrap: pretty;
+    }
+
     /* Products & Ventures Grid */
     .products-grid {
       display: grid;
@@ -520,20 +528,23 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.5rem;
       margin-bottom: 1.25rem;
     }
 
     .status-badge {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0.3rem 0.75rem;
+      letter-spacing: 0.04em;
+      padding: 0.28rem 0.65rem;
       border-radius: var(--radius-full);
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.35rem;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .status-badge.flagship {
@@ -556,8 +567,10 @@
 
     .card-version {
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-dim);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .card-title {
@@ -591,6 +604,7 @@
       border: 1px solid var(--border-subtle);
       padding: 0.25rem 0.65rem;
       border-radius: var(--radius-sm);
+      white-space: nowrap;
     }
 
     .card-action-btn {
@@ -601,11 +615,12 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 0.85rem 1.2rem;
+      padding: 0.85rem 1.25rem;
       color: var(--text-main);
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
+      white-space: nowrap;
       transition: all 0.2s ease;
     }
 
@@ -788,6 +803,40 @@
       font-size: 0.9rem;
       margin-bottom: 1.1rem;
       line-height: 1.5;
+    }
+
+    .demo-specs-row {
+      margin-top: 1.15rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      gap: 0.75rem 1.4rem;
+      font-size: 0.74rem;
+      color: var(--text-dim);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .spec-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+    }
+
+    .spec-label {
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .spec-orange {
+      color: var(--brand-orange);
+      font-weight: 700;
+    }
+
+    .spec-green {
+      color: var(--brand-green);
+      font-weight: 700;
     }
 
     /* Socials & Channels Grid */
@@ -1041,7 +1090,7 @@
       <div class="product-card flagship">
         <div class="card-top">
           <div class="card-badge-row">
-            <span class="status-badge flagship">● Flagship SaaS • Live</span>
+            <span class="status-badge flagship">● Flagship SaaS</span>
             <span class="card-version">Production v1.0</span>
           </div>
           <h3 class="card-title">Brickmine3D Studio</h3>
@@ -1054,16 +1103,12 @@
             <span class="tech-tag">360° Turntable Loops</span>
             <span class="tech-tag">Director Videos</span>
             <span class="tech-tag">4 Aspect Ratios</span>
-            <span class="tech-tag">Zero Cloud GPU Fees</span>
           </div>
         </div>
-        <div style="display: flex; gap: 0.75rem; align-items: center;">
-          <a href="https://brickmine3d.jrpcrewlabs.com" target="_blank" rel="noopener" class="card-action-btn primary" style="flex: 1;">
-            <span>Visit Brickmine3D Studio</span>
-            <span>↗</span>
-          </a>
-          <a href="https://brickmine3d.jrpcrewlabs.com/studio" target="_blank" rel="noopener" class="card-action-btn" style="width: auto; padding: 0.85rem 1rem;" title="Launch Studio Viewport directly">
-            <span>Launch Studio ⚡</span>
+        <div>
+          <a href="https://brickmine3d.jrpcrewlabs.com" target="_blank" rel="noopener" class="card-action-btn primary">
+            <span>Explore Brickmine3D Studio</span>
+            <span>➔</span>
           </a>
         </div>
       </div>
@@ -1077,13 +1122,14 @@
           </div>
           <h3 class="card-title">Spatial AI &amp; Vision</h3>
           <p class="card-description">
-            Multimodal synthetic dataset engine and spatial reasoning benchmark. Bridging hierarchical digital CAD structures with photorealistic physical life-sized scenes for foundation vision models.
+            Multimodal synthetic dataset engine and spatial reasoning benchmark. Bridging hierarchical digital CAD structures with photorealistic physical life-sized scenes for foundation vision models, spatial AI evaluation, and multimodal VQA.
           </p>
           <div class="tech-tags">
             <span class="tech-tag">Spatial Datasets</span>
             <span class="tech-tag">Vision AI</span>
             <span class="tech-tag">Qwen2.5-VL</span>
             <span class="tech-tag">Multimodal VQA</span>
+            <span class="tech-tag">Synthetic 3D</span>
           </div>
         </div>
         <div>
@@ -1103,13 +1149,14 @@
           </div>
           <h3 class="card-title">Emerging Ventures</h3>
           <p class="card-description">
-            Cross-industry technical experiments exploring personal automation tools, generative developer systems, spatial assembly graph models, and experimental consumer software.
+            Cross-industry technical experiments exploring personal automation tools, generative developer systems, spatial assembly graph models, and experimental consumer software designed to solve real-world workflows.
           </p>
           <div class="tech-tags">
-            <span class="tech-tag">Interactive Tools</span>
-            <span class="tech-tag">Automation</span>
-            <span class="tech-tag">Graph Networks</span>
-            <span class="tech-tag">New Markets</span>
+            <span class="tech-tag">Automation Tools</span>
+            <span class="tech-tag">Generative Systems</span>
+            <span class="tech-tag">Assembly Graphs</span>
+            <span class="tech-tag">Spatial AI</span>
+            <span class="tech-tag">New Ventures</span>
           </div>
         </div>
         <div>
@@ -1153,7 +1200,7 @@
         </div>
         
         <div class="media-content">
-          <div class="hero-badge" style="margin-bottom: 0.5rem; background: var(--brand-orange-bg); border-color: var(--brand-orange-border); color: var(--brand-orange); font-size: 0.65rem; padding: 2px 8px;">
+          <div class="hero-badge" style="margin-bottom: 0.5rem; background: var(--brand-orange-bg); border-color: var(--brand-orange-border); color: var(--brand-orange); font-size: 0.65rem; padding: 2px 8px; white-space: nowrap;">
             <span>THE CREATIVE WORKSHOP IN ACTION</span>
           </div>
           <h3>Phoenix Firebird: 60 FPS 16:9 Turntable &amp; In-Browser 3D Synthesis</h3>
@@ -1161,21 +1208,21 @@
             Experience our dedicated 3D rendering pipeline in action. Brickmine3D Studio transforms raw CAD models (.io, .ldr, .glb) into 8 standardized 4K studio stills, seamless 360° turntable loops, and cinematic director videos across 4 aspect ratios (9:16, 1:1, 4:5, 16:9)—computed entirely client-side with zero cloud GPU fees.
           </p>
           <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
-            <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.7rem 1.35rem; font-size: 0.9rem;">
+            <a href="https://www.youtube.com/@JRPCrew" target="_blank" rel="noopener" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.7rem 1.35rem; font-size: 0.9rem; white-space: nowrap;">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
               <span>Subscribe on YouTube (@JRPCrew)</span>
               <span>↗</span>
             </a>
-            <a href="https://brickmine3d.jrpcrewlabs.com/studio.html?model=phoenix" target="_blank" rel="noopener" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.7rem 1.2rem; font-size: 0.9rem;">
+            <a href="https://brickmine3d.jrpcrewlabs.com/studio.html?model=phoenix" target="_blank" rel="noopener" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.7rem 1.2rem; font-size: 0.9rem; white-space: nowrap;">
               <span>Open in 3D Studio</span>
               <span>➔</span>
             </a>
           </div>
-          <div class="demo-specs-row mono" style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border-subtle); display: flex; gap: 1rem; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap;">
-            <div><span style="color: var(--text-muted); font-weight: 700;">MODEL:</span> Phoenix Firebird (3D Mesh)</div>
-            <div><span style="color: var(--text-muted); font-weight: 700;">OUTPUT:</span> 8x 4K Stills • 360° Turntable • Director Video</div>
-            <div><span style="color: var(--brand-orange); font-weight: 700;">ASPECT RATIOS:</span> 9:16 | 1:1 | 4:5 | 16:9</div>
-            <div><span style="color: var(--brand-green); font-weight: 700;">FRAMERATE:</span> 60 FPS Loop</div>
+          <div class="demo-specs-row mono">
+            <div class="spec-item"><span class="spec-label">MODEL:</span> Phoenix Firebird (3D Mesh)</div>
+            <div class="spec-item"><span class="spec-label">PIPELINE:</span> 8x 4K Stills • 360° Turntable • Director Video</div>
+            <div class="spec-item"><span class="spec-label spec-orange">ASPECT RATIOS:</span> 9:16 | 1:1 | 4:5 | 16:9</div>
+            <div class="spec-item"><span class="spec-label spec-green">FRAMERATE:</span> 60 FPS Loop</div>
           </div>
         </div>
       </div>
