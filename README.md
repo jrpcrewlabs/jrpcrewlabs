@@ -22,7 +22,7 @@
 ---
 
 ## 🎬 Workshop & Video Demo Showcase
-- **Hero Showcase Asset:** Flagship **Phoenix Firebird** (520-piece certified MOC) replacing all legacy third-party community models.
+- **Hero Showcase Asset:** Flagship **Phoenix Firebird** (Proprietary 3D Mesh Asset) replacing all legacy third-party community models.
 - **Turntable Video:** 16:9 widescreen, 60 FPS hardware loop (`assets/phoenix_firebird_turntable_16x9.mp4`) synthesized via Three.js WebGL & WebCodecs.
 - **Hero Stills:** 16:9 4K render still (`assets/phoenix_firebird_turntable_16x9_hero.png`) and fallback poster (`assets/demo_preview.png`).
 - **Brickmine3D Showcase Controls:** Interactive `360° Turntable` ⟷ `4K Still` view mode switcher with asset protection.
