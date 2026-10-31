@@ -39,3 +39,4 @@
 - **Reddit:** [u/jrpcrewlabs](https://www.reddit.com/user/jrpcrewlabs/)
 - **X (Twitter):** [@JRPCrew](https://x.com/JRPCrew)
 - **LinkedIn:** [company/jrpcrewlabs](https://www.linkedin.com/company/jrpcrewlabs)
+- **BrickLink Studio:** [Radhika Shah (Founder MOCs)](https://www.bricklink.com/v3/studio/my_studio.page) — Official BrickLink Studio MOC repository connecting founder custom builds directly to JRPCrew & Brickmine3D.
